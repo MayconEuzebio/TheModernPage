@@ -28,7 +28,7 @@ function CountLovesDay() {
             <div>{count} days of marriage</div>
             <br></br>
             <button onClick={countDays}>And the other day?</button>
-            <button onClick={clear}>Restart</button>
+            <button onClick={clear}>Today?</button>
         </div>
     )
 }
