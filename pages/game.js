@@ -38,7 +38,7 @@ const containerStyle = {
   'flexDirection': 'column',
   'backgroundColor': '#090909',
   'color': '#f2f2f2',
-  'paddingBottom': '20px',
+  'height': '100vh',
 }
 
 const instructionsStyle = {
