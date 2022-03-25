@@ -5,14 +5,15 @@ const rowStyle = {
   display: 'flex'
 }
 
-const hiddenStyle = {
-    visibility: 'hidden'
+const winnerStyle = { 
+  backgroundColor: '#ffa500', 
+  borderColor: '#ffa500', 
 }
 
 const squareStyle = {
   'width':'60px',
   'height':'60px',
-  'backgroundColor': '#ddd',
+  'backgroundColor': '#262626',
   'margin': '4px',
   'display': 'flex',
   'justifyContent': 'center',
@@ -34,7 +35,10 @@ const boardStyle = {
 const containerStyle = {
   'display': 'flex',
   'alignItems': 'center',
-  'flexDirection': 'column'
+  'flexDirection': 'column',
+  'backgroundColor': '#090909',
+  'color': '#f2f2f2',
+  'paddingBottom': '20px',
 }
 
 const instructionsStyle = {
@@ -42,6 +46,7 @@ const instructionsStyle = {
   'marginBottom': '5px',
   'fontWeight': 'bold',
   'fontSize': '16px',
+  'padding': '8px 16px',
 }
 
 const buttonStyle = {
@@ -49,9 +54,11 @@ const buttonStyle = {
   'marginBottom': '16px',
   'width': '80px',
   'height': '40px',
-  'backgroundColor': '#8acaca',
-  'color': 'white',
+  'backgroundColor': '#f9f9f9',
+  'color': '#000',
   'fontSize': '16px',
+  'border': '0',
+  'borderRadius': '3px',
 }
 
 class Square extends React.Component {
@@ -70,22 +77,6 @@ class Square extends React.Component {
     );
   }
 }
-
-const initialState = {
-    winner: "",
-    boxs: {},
-    turn: 0,
-    linesToWin: [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-  ],
-  };
 
 class Board extends React.Component {
 
@@ -133,7 +124,7 @@ class Board extends React.Component {
             let [a, b, c] = lines[i];
             if ((box[a] === player) && box[a] === box[b] && box[a] === box[c]) {
                 this.setState({winner : player});
-                this.setState({winnerStyle : { backgroundColor: '#ffa500' }});
+                this.setState({winnerStyle : winnerStyle});
                 return true;
             }
         }
@@ -147,7 +138,7 @@ class Board extends React.Component {
 
         let boxs = this.state.boxs;
         boxs[idx] = this.state.turn % 2 == 0 ? 'X' : 'O';
-        this.setState({boxs: {...this.state.boxs, boxs}});
+        this.setState({boxs: boxs});
 
         this.ticTacToeGame(boxs[idx])
 
@@ -161,24 +152,24 @@ class Board extends React.Component {
             Next player: <span>{this.state.turn % 2 == 0 ? 'X' : 'O'}</span>
         </div>
         <div id="winnerArea" className="winner" style={{...instructionsStyle, ...this.state.winnerStyle}}>
-            Winner: <span>{this.state.winner || 'None'}</span>
+            Winner: <span>{this.state.winner || '?'}</span>
         </div>
         <button style={buttonStyle} onClick={this.reset}>Reset</button>
         <div style={{...boardStyle, ...this.state.winnerStyle}}>
           <div className="board-row" style={rowStyle}>
-            <Square position='0' value={this.state.boxs[0]} callbackParent={() => this.nextTurn(0)}/>
-            <Square position='1' value={this.state.boxs[1]} callbackParent={() => this.nextTurn(1)}/>
-            <Square position='2' value={this.state.boxs[2]} callbackParent={() => this.nextTurn(2)}/>
+            <Square value={this.state.boxs[0]} callbackParent={() => this.nextTurn(0)}/>
+            <Square value={this.state.boxs[1]} callbackParent={() => this.nextTurn(1)}/>
+            <Square value={this.state.boxs[2]} callbackParent={() => this.nextTurn(2)}/>
           </div>
           <div className="board-row" style={rowStyle}>
-            <Square position='3' value={this.state.boxs[3]} callbackParent={() => this.nextTurn(3)}/>
-            <Square position='4' value={this.state.boxs[4]} callbackParent={() => this.nextTurn(4)}/>
-            <Square position='5' value={this.state.boxs[5]} callbackParent={() => this.nextTurn(5)}/>
+            <Square value={this.state.boxs[3]} callbackParent={() => this.nextTurn(3)}/>
+            <Square value={this.state.boxs[4]} callbackParent={() => this.nextTurn(4)}/>
+            <Square value={this.state.boxs[5]} callbackParent={() => this.nextTurn(5)}/>
           </div>
           <div className="board-row" style={rowStyle}>
-            <Square position='6' value={this.state.boxs[6]} callbackParent={() => this.nextTurn(6)}/>
-            <Square position='7' value={this.state.boxs[7]} callbackParent={() => this.nextTurn(7)}/>
-            <Square position='8' value={this.state.boxs[8]} callbackParent={() => this.nextTurn(8)}/>
+            <Square value={this.state.boxs[6]} callbackParent={() => this.nextTurn(6)}/>
+            <Square value={this.state.boxs[7]} callbackParent={() => this.nextTurn(7)}/>
+            <Square value={this.state.boxs[8]} callbackParent={() => this.nextTurn(8)}/>
           </div>
         </div>
       </div>
